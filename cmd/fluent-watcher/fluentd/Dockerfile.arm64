@@ -19,6 +19,7 @@ FROM arm64v8/ruby:3.2-slim-bullseye
 COPY --from=builderqemu /go/qemu-aarch64-static /usr/bin/
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.15.3"
 ENV TINI_VERSION=0.18.0
+ENV GEM_HOME=/usr
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -56,6 +57,8 @@ RUN apt-get update \
          fluent-plugin-aws-elasticsearch-service \
          fluent-plugin-opensearch \
          fluent-plugin-datadog \
+         fluent-plugin-kubernetes_metadata_filter \
+         fluent-plugin-prometheus \
  && echo "plugin installed." \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 && cd jemalloc-5.3.0/ \
