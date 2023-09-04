@@ -58,7 +58,15 @@ const (
 	log_level info
 	workers %d
 </system>
+# Enable prometheus source
+<source>
+	bind 0.0.0.0
+	port 24231
+	metrics_path /metrics
+	@type prometheus
+</source>
 `
+
 	FLUENTD_LOG = `# Do not collect fluentd's own logs to avoid infinite loops.
 <match **>
 	@type null
